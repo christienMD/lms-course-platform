@@ -19,27 +19,29 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Props {
   initialData: {
-    title: string;
+    description: string;
   };
   courseId: string;
 }
 
 const formSchema = z.object({
-  title: z.string().min(1, {
-    message: "Title is required",
+  description: z.string().min(1, {
+    message: "description is required",
   }),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
-const TitleForm = ({ initialData, courseId }: Props) => {
+const DescriptionForm = ({ initialData, courseId }: Props) => {
   const [isEditing, setEditing] = useState(false);
 
   const toggleEdit = () => setEditing((current) => !current);
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -50,31 +52,40 @@ const TitleForm = ({ initialData, courseId }: Props) => {
 
   const onSubmit = async (values: FormData) => {
     try {
-        await axios.patch(`/api/courses/${courseId}` , values)
-        toast.success('Course updated successfuly')
-        toggleEdit();
-        router.refresh()
+      await axios.patch(`/api/courses/${courseId}`, values);
+      toast.success("Course updated successfuly");
+      toggleEdit();
+      router.refresh();
     } catch {
-        toast.error('Something went wrong')
+      toast.error("Something went wrong");
     }
   };
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course title
+        Course description
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="size-4 mr-2" />
-              Edit title
+              Edit description
             </>
           )}
         </Button>
       </div>
-      {!isEditing && <p className="mt-2 text-sm">{initialData.title}</p>}
+      {!isEditing && (
+        <p
+          className={cn(
+            "mt-2 text-sm",
+            !initialData.description && "text-slate-500 italic"
+          )}
+        >
+          {initialData.description || "No description"}
+        </p>
+      )}
       {isEditing && (
         <Form {...form}>
           <form
@@ -83,14 +94,14 @@ const TitleForm = ({ initialData, courseId }: Props) => {
           >
             <FormField
               control={form.control}
-              name="title"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
+                    <Textarea
                       className="bg-white"
                       disabled={isSubmitting}
-                      placeholder="e.g 'Advanced web development'"
+                      placeholder="e.g 'This course is about...'"
                       {...field}
                     />
                   </FormControl>
@@ -99,7 +110,9 @@ const TitleForm = ({ initialData, courseId }: Props) => {
               )}
             />
             <div className="flex items-center gap-x-2">
-              <Button disabled={!isValid || isSubmitting} type="submit">Save</Button>
+              <Button disabled={!isValid || isSubmitting} type="submit">
+                Save
+              </Button>
             </div>
           </form>
         </Form>
@@ -108,4 +121,4 @@ const TitleForm = ({ initialData, courseId }: Props) => {
   );
 };
 
-export default TitleForm;
+export default DescriptionForm;

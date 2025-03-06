@@ -29,6 +29,7 @@
     "@radix-ui/react-tooltip": "^1.1.8",
     "@tidbcloud/prisma-adapter": "^5.20.0",
     "@tidbcloud/serverless": "^0.2.0",
+    "@uploadthing/react": "^7.3.0",
     "axios": "^1.8.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -44,6 +45,7 @@
     "sonner": "^2.0.1",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
+    "uploadthing": "^7.5.2",
     "vaul": "^1.1.2",
     "zod": "^3.24.2"
   },
