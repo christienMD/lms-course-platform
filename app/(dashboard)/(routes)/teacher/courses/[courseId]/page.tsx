@@ -1,12 +1,13 @@
 import IconBadge from "@/components/IconBadge";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
-import { LayoutDashboard } from "lucide-react";
+import { CircleDollarSign, LayoutDashboard, ListChecks } from "lucide-react";
 import { redirect } from "next/navigation";
 import TitleForm from "./_components/TitleForm";
 import DescriptionForm from "./_components/DescriptionForm";
 import ImageForm from "./_components/ImageForm";
 import CategoryForm from "./_components/CategoryForm";
+import PriceForm from "./_components/PriceForm";
 
 interface Props {
   params: { courseId: string };
@@ -27,10 +28,9 @@ const CourseIdPage = async ({ params: { courseId } }: Props) => {
 
   const categories = await db.category.findMany({
     orderBy: {
-      name: 'asc'
-    }
-  })
-
+      name: "asc",
+    },
+  });
 
   if (!course) {
     redirect("/");
@@ -64,7 +64,7 @@ const CourseIdPage = async ({ params: { courseId } }: Props) => {
           <div className="flex items-center gap-x-2">
             <IconBadge size="sm" icon={LayoutDashboard} />
             <h2 className="text-xl ">Customize your course</h2>
-          </div> 
+          </div>
 
           <TitleForm initialData={course} courseId={course.id} />
 
@@ -72,10 +72,31 @@ const CourseIdPage = async ({ params: { courseId } }: Props) => {
 
           <ImageForm initialData={course} courseId={course.id} />
 
-          <CategoryForm initialData={course} courseId={course.id} options={categories.map((category) => ({
-            label: category.name,
-            value: category.id
-          }))}/>
+          <CategoryForm
+            initialData={course}
+            courseId={course.id}
+            options={categories.map((category) => ({
+              label: category.name,
+              value: category.id,
+            }))}
+          />
+        </div>
+
+        <div className="space-y-6">
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge size="sm" icon={ListChecks} />
+              <h2 className="text-xl">Course Chapters</h2>
+            </div>
+            <div className="">Chapers</div>
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge size="sm" icon={CircleDollarSign} />
+              <h2 className="text-xl">Sell your course</h2>
+            </div>
+            <PriceForm initialData={course} courseId={course.id} />
+          </div>
         </div>
       </div>
     </div>
