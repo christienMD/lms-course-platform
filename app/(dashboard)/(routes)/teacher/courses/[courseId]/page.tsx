@@ -14,6 +14,7 @@ import ImageForm from "./_components/ImageForm";
 import CategoryForm from "./_components/CategoryForm";
 import PriceForm from "./_components/PriceForm";
 import AttachmentForm from "./_components/AttachmentForm";
+import ChaptersForm from "./_components/ChaptersForm";
 
 interface Props {
   params: { courseId: string };
@@ -29,8 +30,14 @@ const CourseIdPage = async ({ params: { courseId } }: Props) => {
   const course = await db.course.findUnique({
     where: {
       id: courseId,
+      userId
     },
     include: {
+      chapters: {
+        orderBy: {
+          position: "asc",
+        },
+      },
       attatchments: {
         orderBy: {
           createdAt: "desc",
@@ -55,6 +62,7 @@ const CourseIdPage = async ({ params: { courseId } }: Props) => {
     course.imageUrl,
     course.price,
     course.categoryId,
+    course.chapters.some(chapter => chapter.isPublished)
   ];
 
   const totalFields = requiredFields.length;
@@ -101,7 +109,7 @@ const CourseIdPage = async ({ params: { courseId } }: Props) => {
               <IconBadge size="sm" icon={ListChecks} />
               <h2 className="text-xl">Course Chapters</h2>
             </div>
-            <div className="">Chapers</div>
+            <ChaptersForm initialData={course} courseId={course.id} />
           </div>
           <div>
             <div className="flex items-center gap-x-2">
