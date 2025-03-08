@@ -20,6 +20,7 @@ import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { formatPrice } from "@/lib/format";
 
 interface Props {
   initialData: Course;
@@ -80,7 +81,7 @@ const PriceForm = ({ initialData, courseId }: Props) => {
             !initialData.price && "text-slate-500 italic"
           )}
         >
-          {initialData.price || "No price"}
+          {initialData.price ? formatPrice(initialData.price) : "No price"}
         </p>
       )}
       {isEditing && (
@@ -95,14 +96,19 @@ const PriceForm = ({ initialData, courseId }: Props) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      className="bg-white"
-                      disabled={isSubmitting}
-                      placeholder="Set a price for your course"
-                      {...field}
-                    />
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <span className="text-gray-500 sm:text-sm">$</span>
+                      </div>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        className="bg-white pl-7"
+                        disabled={isSubmitting}
+                        placeholder="Set a price for your course"
+                        {...field}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
