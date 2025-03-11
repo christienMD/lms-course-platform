@@ -83,4 +83,28 @@ body,
   font-size: 16px !important;
 }
 
+/* quill-overrides */
+.ql-editor ul > li {
+  list-style-type: disc !important;
+  padding-left: 0.5em;
+}
+
+.ql-editor ul > li::before {
+  content: none !important;
+}
+
+.ql-editor ol > li {
+  list-style-type: decimal !important;
+  padding-left: 0.5em;
+}
+
+.ql-editor ol > li::before {
+  content: none !important;
+}
+
+.ql-editor ul, .ql-editor ol {
+  padding-left: 1.5em !important;
+}
+
+
 @import "~@uploadthing/react/styles.css";

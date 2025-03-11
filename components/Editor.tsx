@@ -5,7 +5,6 @@ import { useMemo } from "react";
 
 import "quill/dist/quill.snow.css";
 
-
 interface Props {
   onChange: (value: string) => void;
   value: string;
@@ -19,7 +18,11 @@ const Editor = ({ onChange, value }: Props) => {
 
   return (
     <div className="bg-white">
-      <ReactQuill theme="snow" value={value} onChange={onChange} />
+      <ReactQuill
+        theme="snow"
+        value={value}
+        onChange={onChange}
+      />
     </div>
   );
 };
