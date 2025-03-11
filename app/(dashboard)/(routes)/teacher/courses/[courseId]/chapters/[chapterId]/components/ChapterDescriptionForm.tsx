@@ -5,36 +5,40 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import Editor from "@/components/Editor";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { Course } from "@prisma/client";
+import { Chapter } from "@prisma/client";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import Preview from "@/components/Preview";
 
 interface Props {
-  initialData: Course
+  initialData: Chapter;
   courseId: string;
+  chapterId: string;
 }
 
 const formSchema = z.object({
-  description: z.string().min(1, {
-    message: "description is required",
-  }),
+  description: z.string().min(1),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
-const DescriptionForm = ({ initialData, courseId }: Props) => {
+const ChapterDescriptionForm = ({
+  initialData,
+  courseId,
+  chapterId,
+}: Props) => {
   const [isEditing, setEditing] = useState(false);
 
   const toggleEdit = () => setEditing((current) => !current);
@@ -43,7 +47,7 @@ const DescriptionForm = ({ initialData, courseId }: Props) => {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      description: initialData.description || ''
+      description: initialData.description || "",
     },
   });
 
@@ -51,8 +55,11 @@ const DescriptionForm = ({ initialData, courseId }: Props) => {
 
   const onSubmit = async (values: FormData) => {
     try {
-      await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success("Course updated successfuly");
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values
+      );
+      toast.success("Chapter updated successfuly");
       toggleEdit();
       router.refresh();
     } catch {
@@ -63,7 +70,7 @@ const DescriptionForm = ({ initialData, courseId }: Props) => {
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course description
+        Chapter description
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
@@ -76,14 +83,17 @@ const DescriptionForm = ({ initialData, courseId }: Props) => {
         </Button>
       </div>
       {!isEditing && (
-        <p
+        <div
           className={cn(
             "mt-2 text-sm",
             !initialData.description && "text-slate-500 italic"
           )}
         >
-          {initialData.description || "No description"}
-        </p>
+          {initialData.description && "No description"}
+          {initialData.description && (
+            <Preview value={initialData.description} />
+          )}
+        </div>
       )}
       {isEditing && (
         <Form {...form}>
@@ -97,12 +107,7 @@ const DescriptionForm = ({ initialData, courseId }: Props) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea
-                      className="bg-white"
-                      disabled={isSubmitting}
-                      placeholder="e.g 'This course is about...'"
-                      {...field}
-                    />
+                    <Editor {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -120,4 +125,4 @@ const DescriptionForm = ({ initialData, courseId }: Props) => {
   );
 };
 
-export default DescriptionForm;
+export default ChapterDescriptionForm;
