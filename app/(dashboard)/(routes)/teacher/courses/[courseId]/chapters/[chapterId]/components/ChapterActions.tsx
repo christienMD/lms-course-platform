@@ -70,7 +70,7 @@ const ChapterActions = ({
         size="sm"
         disabled={disabled || isLoading}
       >
-        {isPublished ? "Unpublished" : "Publish"}
+        {isPublished ? "Unpublish" : "Publish"}
       </Button>
       <ConfirmModal onConfirm={onDelete}>
         <Button size="sm" disabled={isLoading}>
