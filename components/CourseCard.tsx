@@ -4,6 +4,7 @@ import React from "react";
 import IconBadge from "./IconBadge";
 import { BookOpen } from "lucide-react";
 import { formatPrice } from "@/lib/format";
+import CourseProgress from "./CourseProgress";
 
 interface Props {
   id: string;
@@ -38,14 +39,20 @@ const CourseCard = ({
           <div className="my-3 flex items-center gap-x-2 text-sm md:text-sx">
             <div className="flex items-center gap-x-1 text-slate-500">
               <IconBadge size="sm" icon={BookOpen} />
-              <span className="">{chaptersLength} {chaptersLength === 1 ? 'Chapter': 'Chapters'}</span>
+              <span className="">
+                {chaptersLength} {chaptersLength === 1 ? "Chapter" : "Chapters"}
+              </span>
             </div>
           </div>
           {progress !== null ? (
-            <div className="">Progres compo</div>
-          ): (
+            <CourseProgress
+              variant={progress === 100 ? "success" : "default"}
+              size="sm"
+              value={progress}
+            />
+          ) : (
             <p>{formatPrice(price)}</p>
-          ) }
+          )}
         </div>
       </div>
     </Link>
