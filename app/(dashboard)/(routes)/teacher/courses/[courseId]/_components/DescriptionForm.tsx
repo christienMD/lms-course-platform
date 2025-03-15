@@ -11,7 +11,7 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -22,7 +22,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 interface Props {
-  initialData: Course
+  initialData: Course;
   courseId: string;
 }
 
@@ -43,7 +43,7 @@ const DescriptionForm = ({ initialData, courseId }: Props) => {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      description: initialData.description || ''
+      description: initialData.description || "",
     },
   });
 

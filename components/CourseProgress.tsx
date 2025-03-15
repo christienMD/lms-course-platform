@@ -9,7 +9,7 @@ interface Props {
 }
 
 const colorByVariant = {
-  default: "text-blue-700",
+  default: "text-sky-700",
   success: "text-emerald-700",
 };
 
@@ -22,10 +22,10 @@ const sizeByVariant = {
 const CourseProgress = ({ value, variant, size }: Props) => {
   return (
     <div>
-      <Progress className="h-2" />
+      <Progress variant={variant} className="h-2" value={value} />
       <p
         className={cn(
-          "font-medium mt-2 text-blue-700",
+          "font-medium mt-2 text-sky-700",
           colorByVariant[variant || "default"],
           sizeByVariant[size || "default"]
         )}

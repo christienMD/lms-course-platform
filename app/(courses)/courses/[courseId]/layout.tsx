@@ -45,6 +45,7 @@ const CourseLayout = async ({ children, params: { courseId } }: Props) => {
   }
 
   const progressCount = await getProgress(userId, course.id);
+  
 
   return (
     <div className="h-full">

@@ -2,7 +2,6 @@
 import axios from "axios";
 import * as z from "zod";
 
-
 import FileUpload from "@/components/FileUpload";
 import { Button } from "@/components/ui/button";
 import { Course } from "@prisma/client";
@@ -30,7 +29,6 @@ const ImageForm = ({ initialData, courseId }: Props) => {
 
   const toggleEdit = () => setEditing((current) => !current);
   const router = useRouter();
-
 
   const onSubmit = async (values: FormData) => {
     try {

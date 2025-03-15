@@ -36,23 +36,22 @@ const ChaptersList = ({ items, onEdit, onReorder }: Props) => {
 
     const items = Array.from(chapters);
     const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index , 0 , reorderedItem)
+    items.splice(result.destination.index, 0, reorderedItem);
 
-    const startIndex = Math.min(result.source.index , result.destination.index)
-    const endIndex = Math.max(result.source.index , result.destination.index)
+    const startIndex = Math.min(result.source.index, result.destination.index);
+    const endIndex = Math.max(result.source.index, result.destination.index);
 
     const updatedChapters = items.slice(startIndex, endIndex + 1);
 
-    setChapters(items)
+    setChapters(items);
 
     const bulkUpdateData = updatedChapters.map((chapter) => ({
-        id: chapter.id,
-        position: items.findIndex((item) => item.id === chapter.id)
-    }))
+      id: chapter.id,
+      position: items.findIndex((item) => item.id === chapter.id),
+    }));
 
     onReorder(bulkUpdateData);
-
-  }
+  };
 
   if (!isMounted) {
     return null;
@@ -74,7 +73,7 @@ const ChaptersList = ({ items, onEdit, onReorder }: Props) => {
                     className={cn(
                       "flex items-center gap-x-2 bg-slate-200 border-slate-200 border text-slate-700 rounded-md mb-4 text-sm",
                       chapter.isPublished &&
-                        "bg-blue-100 border-blue-200 text-blue-700"
+                        "bg-sky-100 border-sky-200 text-sky-700"
                     )}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
@@ -82,8 +81,7 @@ const ChaptersList = ({ items, onEdit, onReorder }: Props) => {
                     <div
                       className={cn(
                         "px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition",
-                        chapter.isPublished &&
-                          "border-blue-200 hover:bg-blue-200"
+                        chapter.isPublished && "border-sky-200 hover:bg-sky-200"
                       )}
                       {...provided.dragHandleProps}
                     >
@@ -95,7 +93,7 @@ const ChaptersList = ({ items, onEdit, onReorder }: Props) => {
                       <Badge
                         className={cn(
                           "bg-slate-500",
-                          chapter.isPublished && "bg-blue-700"
+                          chapter.isPublished && "bg-sky-700"
                         )}
                       >
                         {chapter.isPublished ? "Published" : "Draft"}

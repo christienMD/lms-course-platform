@@ -50,7 +50,7 @@ export const columns: ColumnDef<Course>[] = [
         currency: "USD",
       }).format(price);
 
-      return <div>{formatted}</div>
+      return <div>{formatted}</div>;
     },
   },
   {
@@ -70,7 +70,7 @@ export const columns: ColumnDef<Course>[] = [
       const isPublished = row.getValue("isPublished") || false;
 
       return (
-        <Badge className={cn("bg-slate-600", isPublished && "bg-blue-700")}>
+        <Badge className={cn("bg-slate-600", isPublished && "bg-sky-700")}>
           {isPublished ? "Published" : "Draft"}
         </Badge>
       );

@@ -25,7 +25,7 @@ interface Props {
     title: string;
   };
   courseId: string;
-  chapterId: string
+  chapterId: string;
 }
 
 const formSchema = z.object({
@@ -34,11 +34,11 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-const ChapterTitleForm = ({ initialData, courseId , chapterId }: Props) => {
+const ChapterTitleForm = ({ initialData, courseId, chapterId }: Props) => {
   const [isEditing, setEditing] = useState(false);
 
   const toggleEdit = () => setEditing((current) => !current);
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -49,12 +49,15 @@ const ChapterTitleForm = ({ initialData, courseId , chapterId }: Props) => {
 
   const onSubmit = async (values: FormData) => {
     try {
-        await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}` , values)
-        toast.success('Chapter updated successfuly')
-        toggleEdit();
-        router.refresh()
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values
+      );
+      toast.success("Chapter updated successfuly");
+      toggleEdit();
+      router.refresh();
     } catch {
-        toast.error('Something went wrong')
+      toast.error("Something went wrong");
     }
   };
 
@@ -98,7 +101,9 @@ const ChapterTitleForm = ({ initialData, courseId , chapterId }: Props) => {
               )}
             />
             <div className="flex items-center gap-x-2">
-              <Button disabled={!isValid || isSubmitting} type="submit">Save</Button>
+              <Button disabled={!isValid || isSubmitting} type="submit">
+                Save
+              </Button>
             </div>
           </form>
         </Form>

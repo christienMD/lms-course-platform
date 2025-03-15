@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Loader2, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useConfettiStore } from "@/hooks/use-confetti-store";
 
 interface Props {
   playbackId: string;
@@ -28,8 +29,37 @@ const VideoPlayer = ({
   title,
 }: Props) => {
   const [isReady, setIsReady] = useState(false);
+  const router = useRouter();
+  const confetti = useConfettiStore();
 
-  console.log("PlaybackId: ", playbackId);
+  const onEnd = async () => {
+    try {
+      if (completeOnEnd) {
+        await axios.put(
+          `/api/courses/${courseId}/chapters/${chapterId}/progress`,
+          {
+            isCompleted: true,
+          }
+        );
+
+        if (!nextChapterId) {
+          confetti.onOpen();
+        }
+
+        toast.success("Progress updated successfully");
+
+        router.refresh();
+
+        if (nextChapterId) {
+          router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
+        }
+
+        router.refresh();
+      }
+    } catch {
+      toast.error("Something went wrong");
+    }
+  };
 
   return (
     <div className="relative aspect-video">
@@ -56,7 +86,7 @@ const VideoPlayer = ({
             console.error("Mux player error:", error);
             toast.error("Error loading video");
           }}
-          onEnded={() => {}}
+          onEnded={onEnd}
           autoPlay
           playbackId={playbackId}
         />

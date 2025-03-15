@@ -26,7 +26,7 @@ type FormData = z.infer<typeof formSchema>;
 const ChapterVideoForm = ({ initialData, courseId, chapterId }: Props) => {
   const [isEditing, setEditing] = useState(false);
 
-  console.log('plyb Id: ', initialData?.muxData?.playbackId)
+  console.log("plyb Id: ", initialData?.muxData?.playbackId);
 
   const toggleEdit = () => setEditing((current) => !current);
   const router = useRouter();

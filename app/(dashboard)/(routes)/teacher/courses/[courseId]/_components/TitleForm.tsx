@@ -39,7 +39,7 @@ const TitleForm = ({ initialData, courseId }: Props) => {
   const [isEditing, setEditing] = useState(false);
 
   const toggleEdit = () => setEditing((current) => !current);
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -50,12 +50,12 @@ const TitleForm = ({ initialData, courseId }: Props) => {
 
   const onSubmit = async (values: FormData) => {
     try {
-        await axios.patch(`/api/courses/${courseId}` , values)
-        toast.success('Course updated successfuly')
-        toggleEdit();
-        router.refresh()
+      await axios.patch(`/api/courses/${courseId}`, values);
+      toast.success("Course updated successfuly");
+      toggleEdit();
+      router.refresh();
     } catch {
-        toast.error('Something went wrong')
+      toast.error("Something went wrong");
     }
   };
 
@@ -99,7 +99,9 @@ const TitleForm = ({ initialData, courseId }: Props) => {
               )}
             />
             <div className="flex items-center gap-x-2">
-              <Button disabled={!isValid || isSubmitting} type="submit">Save</Button>
+              <Button disabled={!isValid || isSubmitting} type="submit">
+                Save
+              </Button>
             </div>
           </form>
         </Form>

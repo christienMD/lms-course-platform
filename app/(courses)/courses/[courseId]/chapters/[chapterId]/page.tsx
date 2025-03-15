@@ -8,6 +8,7 @@ import CourseEnrollButton from "./components/CourseEnrollButton";
 import { Separator } from "@/components/ui/separator";
 import Preview from "@/components/Preview";
 import { File } from "lucide-react";
+import CourseProgressButton from "./components/CourseProgressButton";
 
 interface Props {
   params: { courseId: string; chapterId: string };
@@ -35,7 +36,7 @@ const ChapterIdPage = async ({ params: { chapterId, courseId } }: Props) => {
   });
 
   //   console.log('chap: ', chapter)
-//   console.log("muxData: ", muxData);
+  //   console.log("muxData: ", muxData);
 
   if (!chapter || !course) {
     return redirect("/");
@@ -47,7 +48,7 @@ const ChapterIdPage = async ({ params: { chapterId, courseId } }: Props) => {
   return (
     <div>
       {userProgress?.isCompleted && (
-        <Banner variant="warning" label="You already completed this chapter." />
+        <Banner variant="success" label="You already completed this chapter." />
       )}
 
       {isLocked && (
@@ -71,7 +72,12 @@ const ChapterIdPage = async ({ params: { chapterId, courseId } }: Props) => {
         <div className="p-4 flex flex-col md:flex-row items-center justify-between">
           <h2 className="text-2xl font-semibold mb-2">{chapter.title}</h2>
           {purchase ? (
-            <div className=""></div>
+            <CourseProgressButton
+              chapterId={chapterId}
+              courseId={courseId}
+              isCompleted={!!userProgress?.isCompleted}
+              nextChapterId={nextChapter?.id}
+            />
           ) : (
             <CourseEnrollButton courseId={courseId} price={course.price!} />
           )}
@@ -87,7 +93,7 @@ const ChapterIdPage = async ({ params: { chapterId, courseId } }: Props) => {
                 href={attachment.url}
                 target="_blank"
                 key={attachment.id}
-                className="flex items-center p-3 w-full bg-blue-200 border text-blue-700 rounded-md hover:underline"
+                className="flex items-center p-3 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline"
               >
                 <File />
                 <p className="line-clamp-1">{attachment.name}</p>
