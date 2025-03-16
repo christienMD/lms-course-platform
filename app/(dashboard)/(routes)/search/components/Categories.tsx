@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  FcBriefcase,
  FcEngineering,
  FcFilmReel,
  FcMultipleDevices,
@@ -26,7 +27,8 @@ const iconMap: Record<Category['name'] , IconType> = {
     'Accounting': FcSalesPerformance,
     'Computer Science': FcMultipleDevices,
     'Filming': FcFilmReel,
-    'Engineering': FcEngineering
+    'Engineering': FcEngineering,
+    'Business': FcBriefcase
 }
 
 const Categories = ({ items }: Props) => {
