@@ -41,11 +41,17 @@ const SearchPage = async ({ searchParams }: Props) => {
         </Suspense>
       </div>
       <div className="p-6">
-        <Categories items={categories} />
-        <CoursesList items={courses} />
+        <Suspense fallback={<PageLoader />}>
+          <Categories items={categories} />
+        </Suspense>
+        <Suspense fallback={<PageLoader />}>
+          <CoursesList items={courses} />
+        </Suspense>
       </div>
     </>
   );
 };
 
 export default SearchPage;
+
+export const dynamic = "force-dynamic";
