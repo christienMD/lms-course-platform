@@ -3,14 +3,14 @@ import axios from "axios";
 import * as z from "zod";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import Editor from "@/components/Editor";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -19,11 +19,9 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
 
 import { cn } from "@/lib/utils";
 import { Chapter } from "@prisma/client";
-import Preview from "@/components/Preview";
 
 interface Props {
   initialData: Chapter;

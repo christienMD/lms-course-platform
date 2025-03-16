@@ -8,9 +8,8 @@ import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { useDebounce } from "@/hooks/use-debounce";
 
-interface Props {}
 
-const SearchInput = ({}: Props) => {
+const SearchInput = () => {
   const [value, setValue] = useState("");
   const debouncedValue = useDebounce(value);
 

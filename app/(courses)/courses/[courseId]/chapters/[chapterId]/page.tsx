@@ -35,9 +35,6 @@ const ChapterIdPage = async ({ params: { chapterId, courseId } }: Props) => {
     courseId,
   });
 
-  //   console.log('chap: ', chapter)
-  //   console.log("muxData: ", muxData);
-
   if (!chapter || !course) {
     return redirect("/");
   }

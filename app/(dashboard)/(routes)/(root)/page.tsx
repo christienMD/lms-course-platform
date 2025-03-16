@@ -1,11 +1,8 @@
 import { getDashboardCourses } from "@/actions/getDashboardCourses";
-import { Button } from "@/components/ui/button";
-import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
-import Image from "next/image";
+import { CheckCircle, Clock } from "lucide-react";
 import { redirect } from "next/navigation";
 import CoursesList from "../search/components/CoursesList";
-import { CheckCircle, Clock } from "lucide-react";
 import InfoCard from "./components/InfoCard";
 
 export default async function Dashboard() {
