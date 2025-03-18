@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
-import { isTeacher } from '@/lib/teacher';
+// import { isTeacher } from '@/lib/teacher';
 
 const { video } = new Mux({
   tokenId: process.env.MUX_TOKEN_ID!,
@@ -17,7 +17,7 @@ export async function DELETE(
   try {
     const { userId } = await auth();
 
-    if (!userId || !isTeacher(userId)) {
+    if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 

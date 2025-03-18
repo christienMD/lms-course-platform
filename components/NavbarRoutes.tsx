@@ -7,10 +7,10 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 import SearchInput from "./SearchInput";
-import { isTeacher } from "@/lib/teacher";
+// import { isTeacher } from "@/lib/teacher";
 
 const NavbarRoutes = () => {
-  const { userId } = useAuth();
+  // const { userId } = useAuth();
   const pathname = usePathname();
 
   const isTeacherPage = pathname?.startsWith("/teacher");
@@ -32,11 +32,11 @@ const NavbarRoutes = () => {
               Exit
             </Link>
           </Button>
-        ) : isTeacher(userId) ? (
+        ) : (
           <Button asChild size="sm" variant="ghost">
             <Link href="/teacher/courses">Teacher mode</Link>
           </Button>
-        ) : null}
+        )}
         <UserButton />
       </div>
     </>
